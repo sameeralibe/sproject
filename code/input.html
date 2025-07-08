@@ -1,59 +1,153 @@
 <html>
 
 <head>
-    <title>S Project</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Important for responsiveness -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
+  <title>S Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Important for responsiveness -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Exo:400,700" rel="stylesheet">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    
+  </script>
+  <script type="text/javascript">
+    (function () {
       emailjs.init({
         publicKey: "w_viBRu2EXzn-kAi8",
       });
-   })();
-</script>
- <style>
-    table th, table td {
+    })();
+  </script>
+  <!-- <style>
+    table th,
+    table td {
       vertical-align: middle;
     }
-  </style>  
+  </style> -->
+  
+  <style>
+    .area {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #4a4fc4;
+  overflow: hidden;
+  padding-top: 50px;
+}
+
+.squares {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  list-style: none;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.squares li {
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  animation: floatSquare 20s linear infinite;
+  border-radius: 10px;
+  animation-delay: calc(-1s * var(--i));
+  left: calc(10% * var(--i));
+}
+
+.squares li:nth-child(1) { --i: 1; top: 80%; }
+.squares li:nth-child(2) { --i: 2; top: 60%; }
+.squares li:nth-child(3) { --i: 3; top: 90%; }
+.squares li:nth-child(4) { --i: 4; top: 70%; }
+.squares li:nth-child(5) { --i: 5; top: 75%; }
+.squares li:nth-child(6) { --i: 6; top: 85%; }
+.squares li:nth-child(7) { --i: 7; top: 65%; }
+.squares li:nth-child(8) { --i: 8; top: 95%; }
+.squares li:nth-child(9) { --i: 9; top: 60%; }
+.squares li:nth-child(10){ --i: 10; top: 88%; }
+
+@keyframes floatSquare {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+  </style>
 </head>
 
 <body>
-    <!-- <div class="container mt-4">
-      <form onsubmit="return sendMail(event);">
+  <div class="area position-relative">
+  <ul class="squares">
+    <li></li><li></li><li></li><li></li><li></li>
+    <li></li><li></li><li></li><li></li><li></li>
+  </ul>
 
-            <div class="form-row">
-                <div class="form-group col-12 col-md-6">
-                    <label for="inputName">Product</label>
-                    <input type="text" class="form-control" id="name" placeholder="Name">
-                </div>
-                <div class="form-group col-12 col-md-6">
-                    <label for="inputEmail">Quantity</label>
-                    <input type="email" class="form-control" id="email" placeholder="Email">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputAddress">Amount</label>
-                <input type="text" class="form-control" id="subject" placeholder="1234 Main St">
-            </div>
-            <div class="form-group">
-                <label for="inputAddress2">total amount</label>
-                <textarea name="" id="message"></textarea>
-            </div>
-
-            <button type="button" class="btn btn-primary" >Send</button>
-
-        </form>
-    </div> -->
- <div class="container mt-4">
+  <!-- <div class="container mt-4"> -->
+      <div class="container mt-4 position-relative" style="z-index: 2;">
+ <h5 style="color: white;">Product Table</h5>
     <table class="table table-bordered" id="productTable">
       <thead class="thead-light">
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="productTableBody">
+        <tr id="inputRow">
+          <td><input type="text" class="form-control product-name" placeholder="Product Name"></td>
+          <td><input type="number" class="form-control qty" placeholder="Quantity"></td>
+          <td><input type="number" class="form-control price" placeholder="Price"></td>
+          <td class="total" style="color: white;">₹0.00</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="color: white;">
+          <td colspan="3" class="text-right"><strong>Grand Total:</strong></td>
+          <td id="grandTotal">₹0.00</td>
+        </tr>
+      </tfoot>
+    </table>
+    <button type="button" class="btn btn-primary mb-3" onclick="addProductRow()">+ Add Product</button>
+
+    <h5 style="color: white;">Expense Table</h5>
+    <table class="table table-bordered" id="expenseTable">
+      <thead class="thead-light">
+        <tr>
+          <th>Expense</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody id="expenseTableBody">
+        <tr>
+          <td><input type="text" class="form-control expense-name" placeholder="Expense Name"></td>
+          <td><input type="number" class="form-control expense-price" placeholder="Amount"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+         <tr style="color: white;">
+          <td class="text-right"><strong>Expense Total:</strong></td>
+          <td id="expenseTotal">₹0.00</td>
+        </tr>
+      </tfoot>
+    </table>
+    <button type="button" class="btn btn-primary mb-3" onclick="addExpenseRow()">+ Add Expense</button>
+
+    <h5 class="text-end me-3" style="color: white;">Final Total: <span id="finalTotal">₹0.00</span></h5>
+    <button type="button" class="btn btn-success" onclick="sendMail()">Send</button>
+  </div>
+</div>
+  <!-- <div class="container mt-4">
+    <table class="table table-bordered context" id="productTable">
+      <thead class="thead-light area">
         <tr>
           <th>Product</th>
           <th>Quantity</th>
@@ -61,19 +155,13 @@
           <th>Total</th>
         </tr>
       </thead>
-      <tbody id="productTableBody">
-        <!-- <tr id="inputRow">
-          <td><input type="text" class="form-control" id="name" placeholder="Product Name"></td>
-          <td><input type="number" class="form-control" id="qty" placeholder="Quantity"></td>
-          <td><input type="number" class="form-control" id="amount" placeholder="Unit Price"></td>
-          <td></td>
-        </tr> -->
+      <tbody id="productTableBody area">
         <tr id="inputRow">
-  <td><input type="text" class="form-control product-name" placeholder="Product Name"></td>
-  <td><input type="number" class="form-control qty" placeholder="Quantity"></td>
-  <td><input type="number" class="form-control price" placeholder="Unit Price"></td>
-  <td class="total">₹0.00</td>
-</tr>
+          <td><input type="text" class="form-control product-name" placeholder="Product Name"></td>
+          <td><input type="number" class="form-control qty" placeholder="Quantity"></td>
+          <td><input type="number" class="form-control price" placeholder="Unit Price"></td>
+          <td class="total">₹0.00</td>
+        </tr>
 
       </tbody>
       <tfoot>
@@ -83,265 +171,141 @@
         </tr>
       </tfoot>
     </table>
-      <button type="button" class="btn btn-primary mb-3" onclick="addProductRow()">+ Add Product</button>
-  <h5>Expense Table</h5>
-  <table class="table table-bordered" id="expenseTable">
-    <thead class="thead-light">
-      <tr>
-        <th>Expense</th>
-        <th>Unit Price</th>
-      </tr>
-    </thead>
-    <tbody id="expenseTableBody">
-      <tr>
-        <td><input type="text" class="form-control expense-name" placeholder="Expense Name"></td>
-        <td><input type="number" class="form-control expense-price" placeholder="Amount"></td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td class="text-right"><strong>Expense Total:</strong></td>
-        <td id="expenseTotal">₹0.00</td>
-      </tr>
-    </tfoot>
-  </table>
-  <button type="button" class="btn btn-primary mb-3" onclick="addExpenseRow()">+ Add Expense</button>
+    <button type="button" class="btn btn-primary mb-3" onclick="addProductRow()">+ Add Product</button>
+    <h5>Expense Table</h5>
+    <table class="table table-bordered context" id="expenseTable">
+      <thead class="thead-light area">
+        <tr>
+          <th>Expense</th>
+          <th>Unit Price</th>
+        </tr>
+      </thead>
+      <tbody id="expenseTableBody area">
+        <tr>
+          <td><input type="text" class="form-control expense-name" placeholder="Expense Name"></td>
+          <td><input type="number" class="form-control expense-price" placeholder="Amount"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="text-right"><strong>Expense Total:</strong></td>
+          <td id="expenseTotal">₹0.00</td>
+        </tr>
+      </tfoot>
+    </table>
+    <button type="button" class="btn btn-primary mb-3" onclick="addExpenseRow()">+ Add Expense</button>
 
-  <!-- Final Total -->
-  <h5 class="text-end me-3">Final Total: <span id="finalTotal">₹0.00</span></h5>
+    <h5 class="text-end me-3">Final Total: <span id="finalTotal">₹0.00</span></h5>
 
-  <!-- Send Mail -->
-  <button type="button" class="btn btn-success" onclick="sendMail()">Send</button>
-    <!-- <button type="button" onclick="sendMail()">Send</button> -->
-  </div>
-<script>
-function addProductRow() {
-  const row = document.createElement("tr");
-  row.innerHTML = `
+    <button type="button" class="btn btn-success" onclick="sendMail()">Send</button>
+
+  </div> -->
+  <script>
+    function addProductRow() {
+      const row = document.createElement("tr");
+      row.innerHTML = `
     <td><input type="text" class="form-control product-name" placeholder="Product Name"></td>
     <td><input type="number" class="form-control qty" placeholder="Quantity"></td>
     <td><input type="number" class="form-control price" placeholder="Unit Price"></td>
-    <td class="total">₹0.00</td>
+    <td class="total" style="color:white;">₹0.00</td>
   `;
-  document.getElementById("productTableBody").appendChild(row);
-}
+      document.getElementById("productTableBody").appendChild(row);
+    }
 
-function addExpenseRow() {
-  const row = document.createElement("tr");
-  row.innerHTML = `
+    function addExpenseRow() {
+      const row = document.createElement("tr");
+      row.innerHTML = `
     <td><input type="text" class="form-control expense-name" placeholder="Expense Name"></td>
     <td><input type="number" class="form-control expense-price" placeholder="Amount"></td>
   `;
-  document.getElementById("expenseTableBody").appendChild(row);
-}
-
-function calculateTotals() {
-  let productTotal = 0;
-
-  // PRODUCT TABLE CALCULATION
-  const productRows = document.querySelectorAll("#productTableBody tr");
-  productRows.forEach(row => {
-    const qty = parseFloat(row.querySelector(".qty")?.value) || 0;
-    const price = parseFloat(row.querySelector(".price")?.value) || 0;
-    const total = qty * price;
-    row.querySelector(".total").innerText = `₹${total.toFixed(2)}`;
-    productTotal += total;
-  });
-
-  document.getElementById("grandTotal").innerText = `₹${productTotal.toFixed(2)}`;
-
-  // EXPENSE TABLE CALCULATION
-  let expenseTotal = 0;
-  const expensePrices = document.querySelectorAll(".expense-price");
-  expensePrices.forEach(input => {
-    const value = parseFloat(input.value) || 0;
-    expenseTotal += value;
-  });
-
-  document.getElementById("expenseTotal").innerText = `₹${expenseTotal.toFixed(2)}`;
-
-  // FINAL TOTAL
-  const finalTotal = productTotal - expenseTotal;
-  document.getElementById("finalTotal").innerText = `₹${finalTotal.toFixed(2)}`;
-}
-
-// Auto-trigger total calculation on any relevant input
-document.addEventListener("input", function (e) {
-  if (
-    e.target.classList.contains("qty") ||
-    e.target.classList.contains("price") ||
-    e.target.classList.contains("expense-price")
-  ) {
-    calculateTotals();
-  }
-});
-
-function sendMail() {
-  event.preventDefault();
-  calculateTotals();
-
-  let productRows = document.querySelectorAll("#productTableBody tr");
-  let expenseRows = document.querySelectorAll("#expenseTableBody tr");
-
-  let productData = "PRODUCTS:\n";
-  productRows.forEach((row, index) => {
-    const name = row.querySelector(".product-name")?.value || "";
-    const qty = row.querySelector(".qty")?.value || "";
-    const price = row.querySelector(".price")?.value || "";
-    const total = row.querySelector(".total")?.innerText || "";
-    productData += `Product ${index + 1}:\n  Name: ${name}\n  Qty: ${qty}\n  Unit Price: ₹${price}\n  Total: ${total}\n\n`;
-  });
-
-  let expenseData = "EXPENSES:\n";
-  expenseRows.forEach((row, index) => {
-    const name = row.querySelector(".expense-name")?.value || "";
-    const price = row.querySelector(".expense-price")?.value || "";
-    expenseData += `Expense ${index + 1}:\n  Name: ${name}\n  Amount: ₹${price}\n\n`;
-  });
-
-  const grandTotal = document.getElementById("grandTotal").innerText;
-  const expenseTotal = document.getElementById("expenseTotal").innerText;
-  const finalTotal = document.getElementById("finalTotal").innerText;
-
-  const fullMessage = `${productData}\n${expenseData}\nGrand Total: ${grandTotal}\nExpense Total: ${expenseTotal}\nFinal Total: ${finalTotal}`;
-
-  let parms = {
-    name: "Purchase Details",
-    subject: "Product + Expense Report",
-    message: fullMessage
-  };
-
-  emailjs.send("service_3n8zwtr", "template_648e3yk", parms)
-    .then(() => alert("Email sent successfully!"))
-    .catch(error => console.error("Email send failed:", error));
-}
-</script>
-
-  <!-- <script>
-    function formatCurrency(value) {
-      return "₹" + parseFloat(value).toFixed(2);
+      document.getElementById("expenseTableBody").appendChild(row);
     }
 
-    function addProduct() {
-      const name = document.getElementById("name").value.trim();
-      const qty = parseFloat(document.getElementById("qty").value);
-      const amount = parseFloat(document.getElementById("amount").value);
+    function calculateTotals() {
+      let productTotal = 0;
 
-      if (!name || isNaN(qty) || isNaN(amount)) {
-        return; // Do not add if any field is invalid
-      }
-
-      const total = qty * amount;
-
-      const newRow = document.createElement("tr");
-      newRow.innerHTML = `
-        <td>${name}</td>
-        <td>${qty}</td>
-        <td>${formatCurrency(amount)}</td>
-        <td class="line-total">${formatCurrency(total)}</td>
-      `;
-
-      const inputRow = document.getElementById("inputRow");
-      inputRow.parentNode.insertBefore(newRow, inputRow.nextSibling);
-
-      updateGrandTotal();
-
-      // Clear inputs
-      document.getElementById("name").value = '';
-      document.getElementById("qty").value = '';
-      document.getElementById("amount").value = '';
-
-      // Focus back on product name
-      document.getElementById("name").focus();
-    }
-
-    function updateGrandTotal() {
-      let grandTotal = 0;
-      document.querySelectorAll('#productTableBody .line-total').forEach(cell => {
-        const value = parseFloat(cell.textContent.replace(/[₹,]/g, ''));
-        if (!isNaN(value)) {
-          grandTotal += value;
-        }
+      // PRODUCT TABLE CALCULATION
+      const productRows = document.querySelectorAll("#productTableBody tr");
+      productRows.forEach(row => {
+        const qty = parseFloat(row.querySelector(".qty")?.value) || 0;
+        const price = parseFloat(row.querySelector(".price")?.value) || 0;
+        const total = qty * price;
+        row.querySelector(".total").innerText = `₹${total.toFixed(2)}`;
+        productTotal += total;
       });
-      document.getElementById("grandTotal").textContent = formatCurrency(grandTotal);
+
+      document.getElementById("grandTotal").innerText = `₹${productTotal.toFixed(2)}`;
+
+      // EXPENSE TABLE CALCULATION
+      let expenseTotal = 0;
+      const expensePrices = document.querySelectorAll(".expense-price");
+      expensePrices.forEach(input => {
+        const value = parseFloat(input.value) || 0;
+        expenseTotal += value;
+      });
+
+      document.getElementById("expenseTotal").innerText = `₹${expenseTotal.toFixed(2)}`;
+
+      // FINAL TOTAL
+      const finalTotal = productTotal - expenseTotal;
+      document.getElementById("finalTotal").innerText = `₹${finalTotal.toFixed(2)}`;
     }
 
-    // Trigger addProduct when pressing Enter or leaving amount field
-    document.getElementById("amount").addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        addProduct();
-        e.preventDefault();
+    // Auto-trigger total calculation on any relevant input
+    document.addEventListener("input", function (e) {
+      if (
+        e.target.classList.contains("qty") ||
+        e.target.classList.contains("price") ||
+        e.target.classList.contains("expense-price")
+      ) {
+        calculateTotals();
       }
     });
 
-    document.getElementById("amount").addEventListener("blur", function () {
-      addProduct();
-    });
-  </script> -->
+    function sendMail() {
+      event.preventDefault();
+      calculateTotals();
 
-    <!-- JS: jQuery first, then Popper, then Bootstrap -->
+      let productRows = document.querySelectorAll("#productTableBody tr");
+      let expenseRows = document.querySelectorAll("#expenseTableBody tr");
+
+      let productData = "PRODUCTS:\n";
+      productRows.forEach((row, index) => {
+        const name = row.querySelector(".product-name")?.value || "";
+        const qty = row.querySelector(".qty")?.value || "";
+        const price = row.querySelector(".price")?.value || "";
+        const total = row.querySelector(".total")?.innerText || "";
+        productData += `Product ${index + 1}:\n  Name: ${name}\n  Qty: ${qty}\n  Unit Price: ₹${price}\n  Total: ${total}\n\n`;
+      });
+
+      let expenseData = "EXPENSES:\n";
+      expenseRows.forEach((row, index) => {
+        const name = row.querySelector(".expense-name")?.value || "";
+        const price = row.querySelector(".expense-price")?.value || "";
+        expenseData += `Expense ${index + 1}:\n  Name: ${name}\n  Amount: ₹${price}\n\n`;
+      });
+
+      const grandTotal = document.getElementById("grandTotal").innerText;
+      const expenseTotal = document.getElementById("expenseTotal").innerText;
+      const finalTotal = document.getElementById("finalTotal").innerText;
+
+      const fullMessage = `${productData}\n${expenseData}\nGrand Total: ${grandTotal}\nExpense Total: ${expenseTotal}\nFinal Total: ${finalTotal}`;
+
+      let parms = {
+        name: "Purchase Details",
+        subject: "Product + Expense Report",
+        message: fullMessage
+      };
+
+      emailjs.send("service_3n8zwtr", "template_648e3yk", parms)
+        .then(() => alert("Email sent successfully!"))
+        .catch(error => console.error("Email send failed:", error));
+    }
+  </script>
+
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<!-- <script>
-function sendMail() {
-  event.preventDefault(); 
-  console.log('sendmail working');
 
-  // Get product rows excluding input row
-  let rows = document.querySelectorAll("#productTableBody tr:not(#inputRow)");
-  let productData = "";
 
-  rows.forEach((row, index) => {
-    const cells = row.querySelectorAll("td");
-    productData += `Product ${index + 1}:\n`;
-    productData += `  Name: ${cells[0].innerText}\n`;
-    productData += `  Quantity: ${cells[1].innerText}\n`;
-    productData += `  Unit Price: ${cells[2].innerText}\n`;
-    productData += `  Total: ${cells[3].innerText}\n\n`;
-  });
-
-  // Get grand total
-  const grandTotal = document.getElementById("grandTotal").innerText;
-
-  // Create the email content
-  let parms = {
-    name: "Product Table",
-    subject: "Product Table Details",
-    message: productData + `Grand Total: ${grandTotal}`
-  };
-
-  console.log(parms);
-
-  // Send the email using EmailJS
-  emailjs.send("service_3n8zwtr", "template_648e3yk", parms)
-    .then(() => alert("Email sent successfully!"))
-    .catch(error => console.error("Email send failed:", error));
-}
-</script> -->
-
-        <!-- <script>
-           function sendMail() {
-    event.preventDefault(); 
-                console.log('sendmail working');
-                
-                let parms ={
-                    name : document.getElementById("name").value,
-                    // email : document.getElementById("email").value,
-                    subject : document.getElementById("subject").value,
-                    message : document.getElementById("message").value,
-
-                }
-                console.log(parms);
-                            myInputField.value = '';
-
-                emailjs.send("service_3n8zwtr","template_648e3yk",parms).then(alert("email send !!"));
-//                 emailjs.send("service_3n8zwtr","template_648e3yk",{
-// subject: "sameer",
-// message: "test",
-// name: "smaeer",
-// }).then(alert("email send !!"));
-
-            }
-        </script> -->
 </body>
 
 </html>
